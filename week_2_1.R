@@ -46,5 +46,5 @@ corr<- function(directory, threshold=0){
         cor_results<-c(cor_results, cor(sulfate_data, nitrate_data))
         }
 }
-cor_result
+cor_results
 }
