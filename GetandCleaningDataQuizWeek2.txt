@@ -1,0 +1,64 @@
+## Question 1
+library(httr)
+oauth_endpoints("github")
+gitapp <- oauth_app("github",
+                    key = "e84aefedbce3a0690faf",
+                    secret = "bf589b8260cb6a26719b9cc64fa205d5da1abf26")
+
+github_token <- oauth2.0_token(oauth_endpoints("github"), gitapp)
+
+gtoken <- config(token = github_token)
+req <- GET("https://api.github.com/users/jtleek/repos", config(token = github_token))
+stop_for_status(req)
+output<- content(req)
+datashare <- which(sapply(output, FUN=function(X) "datasharing" %in% X))
+## Question 2
+
+library(sqldf)
+# Downloading file
+# fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv"
+# download.file(fileUrl, destfile = "acs.csv")
+acs <- read.csv("acs.csv")
+head(acs)
+# Option A
+# detach("package:RMySQL", unload=TRUE)
+sqldf("select pwgtp1 from acs where AGEP < 50")
+# Option B
+sqldf("select * from acs where AGEP < 50 and pwgtp1")
+# Option C
+sqldf("select pwgtp1 from acs")
+# Option D
+sqldf("select pwgtp1 from acs where AGEP < 50")
+## Result option D
+## Question 3
+Z <- unique(acs$AGEP)
+## Question 3
+# Option A:
+  A <- sqldf("select AGEP where unique from acs")
+# Error in result_create(conn@ptr, statement) : near "unique": syntax error
+# Option B:
+  B <- sqldf("select distinct AGEP from acs")
+identical(Z, B$AGEP)
+# [1] TRUE
+# Option C:
+  C <- sqldf("select distinct pwgtp1 from acs")
+identical(Z, C$AGEP)
+# [1] FALSE
+# Option D:
+  D <- sqldf("select unique AGEP from acs")
+# Error in result_create(conn@ptr, statement) : near "unique": syntax error
+## Result:
+## Option B: sqldf(“select distinct AGEP from acs”)
+## Question 4
+# How many characters are in the 10th, 20th, 30th and 100th lines of HTML from this page:
+# http://biostat.jhsph.edu/~jleek/contact.html
+# (Hint: the nchar() function in R may be helpful)
+  htmlUrl <- url("http://biostat.jhsph.edu/~jleek/contact.html")
+  htmlCode <- readLines(htmlUrl)
+  close(htmlUrl)
+# viewing data
+  head(htmlCode)
+# Finding answer
+  c(nchar(htmlCode[10]), nchar(htmlCode[20]), nchar(htmlCode[30]), nchar(htmlCode[100]))
+## RESULT 
+## 45 31  7 25
