@@ -9,6 +9,16 @@
 # logical vector to the variable agricultureLogical. Apply the which() function
 # like this to identify the rows of the data frame where the logical vector is
 # TRUE.
+# If you want to download the file you have to use the following code line, I had downloaded the file.
+# if (!file.exists("./data/gdp.csv")) {
+#    download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv",
+#                 "./data/gdp.csv")
+#  }
+#  if (!file.exists("./data/education.csv")) {
+#    download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv",
+#                  "./data/education.csv")
+#  }
+
 # setwd("./R/Data/GCD-tidyr-Quiz3")
 library(tidyr)
 library(dplyr)
